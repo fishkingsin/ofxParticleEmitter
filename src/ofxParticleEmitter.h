@@ -32,12 +32,12 @@
 // ------------------------------------------------------------------------
 
 // Structure that defines the elements which make up a color
-typedef struct {
-	GLfloat red;
-	GLfloat green;
-	GLfloat blue;
-	GLfloat alpha;
-} Color4f;
+//typedef struct {
+//	GLfloat red;
+//	GLfloat green;
+//	GLfloat blue;
+//	GLfloat alpha;
+//} ofFloatColor;
 
 // Structure that defines a vector using x and y
 typedef struct {
@@ -58,7 +58,7 @@ typedef struct
 	GLfloat x;
 	GLfloat y;
 	GLfloat size;
-	Color4f color;
+	ofFloatColor color;
 } PointSprite;
 
 // Structure used to hold particle specific information
@@ -67,8 +67,8 @@ typedef struct
 	Vector2f	position;
 	Vector2f	direction;
     Vector2f	startPos;
-	Color4f		color;
-	Color4f		deltaColor;
+	ofFloatColor		color;
+	ofFloatColor		deltaColor;
     GLfloat		radialAcceleration;
     GLfloat		tangentialAcceleration;
 	GLfloat		radius;
@@ -97,8 +97,8 @@ typedef struct
 // Inline functions
 // ------------------------------------------------------------------------
 
-// Return a Color4f structure populated with 1.0's
-static const Color4f Color4fOnes = {1.0f, 1.0f, 1.0f, 1.0f};
+// Return a ofFloatColor structure populated with 1.0's
+static const ofFloatColor ofFloatColorOnes = {1.0f, 1.0f, 1.0f, 1.0f};
 
 // Return a zero populated Vector2f
 static const Vector2f Vector2fZero = {0.0f, 0.0f};
@@ -109,9 +109,9 @@ static inline Vector2f Vector2fMake(GLfloat x, GLfloat y) {
 	return r;
 }
 
-// Return a Color4f structure populated with the color values passed in
-static inline Color4f Color4fMake(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) {
-	Color4f c; c.red = red; c.green = green; c.blue = blue; c.alpha = alpha;
+// Return a ofFloatColor structure populated with the color values passed in
+static inline ofFloatColor ofFloatColorMake(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) {
+	ofFloatColor c; c.r = red; c.g = green; c.b = blue; c.a = alpha;
 	return c;
 }
 
@@ -181,8 +181,8 @@ public:
 	GLfloat			radialAccelVariance, tangentialAccelVariance;
 	Vector2f		gravity;	
 	GLfloat			particleLifespan, particleLifespanVariance;			
-	Color4f			startColor, startColorVariance;						
-	Color4f			finishColor, finishColorVariance;
+	ofFloatColor			startColor, startColorVariance;						
+	ofFloatColor			finishColor, finishColorVariance;
 	GLfloat			startParticleSize, startParticleSizeVariance;
 	GLfloat			finishParticleSize, finishParticleSizeVariance;
 	GLint			maxParticles;
@@ -198,7 +198,9 @@ public:
 	GLfloat			minRadius;						// Radius from source below which a particle dies
 	GLfloat			rotatePerSecond;				// Number of degrees to rotate a particle around the source position per second
 	GLfloat			rotatePerSecondVariance;		// Variance in degrees for rotatePerSecond
-	
+    void changeTexture(string path);
+    string getTextureName();
+    
 protected:
 	
 	void	parseParticleConfig();
@@ -228,6 +230,7 @@ protected:
 	GLuint			verticesID;		// Holds the buffer name of the VBO that stores the color and vertices info for the particles
 	Particle*		particles;		// Array of particles that hold the particle emitters particle details
 	PointSprite*	vertices;		// Array of vertices and color information for each particle to be rendered
+    string textureName;
 };
 
 #endif
